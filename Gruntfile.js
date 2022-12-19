@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
@@ -22,11 +22,11 @@ module.exports = function(grunt) {
 					//{ src: 'src/index.html', dest: 'dist/index.html' },
 					{ src: 'src/<%= pkg.name %>.css', dest: 'dist/<%= pkg.name %>.css' },
 					{ src: 'src/jquery-ui-sliderAccess.js', dest: 'dist/jquery-ui-sliderAccess.js' },
-					{ src: 'src/i18n/jquery-ui-timepicker-*.js', dest: 'dist/i18n/', expand:true, flatten: true }
+					{ src: 'src/i18n/jquery-ui-timepicker-*.js', dest: 'dist/i18n/', expand: true, flatten: true }
 				]
 			}
 		},
-		concat: {	
+		concat: {
 			dist: {
 				options: {
 					banner: '<%= banner %>',
@@ -37,14 +37,14 @@ module.exports = function(grunt) {
 			},
 			docs: {
 				src: [
-						'src/docs/header.html',
-						'src/docs/intro.html',
-						'src/docs/options.html',
-						'src/docs/formatting.html',
-						'src/docs/i18n.html',
-						'src/docs/examples.html',
-						'src/docs/footer.html'
-					],
+					'src/docs/header.html',
+					'src/docs/intro.html',
+					'src/docs/options.html',
+					'src/docs/formatting.html',
+					'src/docs/i18n.html',
+					'src/docs/examples.html',
+					'src/docs/footer.html'
+				],
 				dest: 'dist/index.html'
 			},
 			i18n: {
@@ -52,15 +52,15 @@ module.exports = function(grunt) {
 					//stripBanners: true,
 					banner: '<%=banner %>\n(function($){\n\n',
 					footer: '\n})(jQuery);\n',
-					process: function(src, filepath){
-						return '// source: '+ filepath + '\n' + 
+					process: function (src, filepath) {
+						return '// source: ' + filepath + '\n' +
 							src.replace(/\(function\s*\(\$\)\s*\{/g, '')
 								.replace(/\}\)\(jQuery\)\;/g, '')
 								.replace(/\$\.timepicker\.setDefaults\(\$\.timepicker\.regional\[[a-z\-\'\"]+\]\)\;/gi, '')
-								.trim() +'\n';
+								.trim() + '\n';
 					}
 				},
-				src: [ 'src/i18n/jquery-ui-timepicker-*.js' ],
+				src: ['src/i18n/jquery-ui-timepicker-*.js'],
 				dest: 'dist/i18n/<%=pkg.name %>-i18n.js'
 			}
 		},
@@ -107,10 +107,10 @@ module.exports = function(grunt) {
 			options: {
 				specs: 'test/*_spec.js',
 				vendor: [
-						'http://code.jquery.com/jquery-1.11.1.min.js',
-						'http://code.jquery.com/ui/1.11.1/jquery-ui.min.js',
-						'http://github.com/searls/jasmine-fixture/releases/1.0.5/1737/jasmine-fixture.js'
-					]
+					'http://code.jquery.com/jquery-1.11.1.min.js',
+					'http://code.jquery.com/ui/1.11.1/jquery-ui.min.js',
+					'http://github.com/searls/jasmine-fixture/releases/1.0.5/1737/jasmine-fixture.js'
+				]
 			}
 		},
 		jshint: {

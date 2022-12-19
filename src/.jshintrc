@@ -1,6 +1,7 @@
 {
+	"esversion": 6,
 	"evil": true,
-	"curly": true,
+	"curly": false,
 	"eqeqeq": true,
 	"immed": true,
 	"latedef": true,
@@ -12,6 +13,10 @@
 	"loopfunc": true,
 	"boss": true,
 	"eqnull": true,
+	"laxbreak": true,
 	"browser": true,
-	"predef": ["jQuery","define"]
+	"predef": [
+		"jQuery",
+		"define"
+	]
 }

@@ -1,12 +1,12 @@
 describe('datetimepicker', function () {
 	describe('utility functions', function () {
 
-		var util = $.timepicker._util;
+		const util = $.timepicker._util;
 
 		describe('extendRemove', function () {
 
-			var target,
-				props;
+			let target;
+			let props;
 
 			beforeEach(function () {
 				target = {};
@@ -15,11 +15,11 @@ describe('datetimepicker', function () {
 
 			it('should add a nonexistent property to the target', function () {
 
-				var expectedValue = "set",
-					propertyName = "prop";
+				const expectedValue = 'set';
+				const propertyName = 'prop';
 				props[propertyName] = expectedValue;
 
-				var newTarget = util._extendRemove(target, props);
+				const newTarget = util._extendRemove(target, props);
 
 				expect(target[propertyName]).toBe(expectedValue);
 				expect(newTarget).toBe(target);
@@ -28,9 +28,10 @@ describe('datetimepicker', function () {
 
 			it('should change the value of an existing property', function () {
 
-				var expectedValue = "new",
-					originalValue = "old",
-					propertyName = "prop";
+				const expectedValue = 'new';
+				const originalValue = 'old';
+				const propertyName = 'prop';
+
 				target[propertyName] = originalValue;
 				props[propertyName] = expectedValue;
 
@@ -43,9 +44,10 @@ describe('datetimepicker', function () {
 
 			it('should null the value of an existing property', function () {
 
-				var expectedValue = null,
-					propertyName = "prop";
-				target[propertyName] = "original";
+				const expectedValue = null;
+				const propertyName = 'prop';
+
+				target[propertyName] = 'original';
 				props[propertyName] = expectedValue;
 
 				util._extendRemove(target, props);
@@ -63,13 +65,13 @@ describe('datetimepicker', function () {
 			});
 
 			it('should say an object with a property is not empty', function () {
-				var testObject = { "prop": "value" };
+				const testObject = { 'prop': 'value' };
 				expect(util._isEmptyObject(testObject)).toBe(false);
 			});
 
 			it('should say object with a supplemental prototype property is empty', function () {
-				var testObject = function () { };
-				testObject.prototype["prop"] = "something";
+				const testObject = function () { };
+				testObject.prototype['prop'] = 'something';
 				expect(util._isEmptyObject(testObject)).toBe(true);
 			});
 
@@ -78,13 +80,13 @@ describe('datetimepicker', function () {
 		describe('convert24to12', function () {
 
 			it('should return the value for a non-zero value less than 12', function () {
-				var expectedHour = 6;
-				expect(util._convert24to12(expectedHour)).toBe("" + expectedHour);
+				const expectedHour = 6;
+				expect(util._convert24to12(expectedHour)).toBe('' + expectedHour);
 			});
 
 			it('should return 12 hours less if the value is greater than 12 and less than 24', function () {
-				var expectedHour = 7;
-				expect(util._convert24to12(expectedHour + 12)).toBe("" + expectedHour);
+				const expectedHour = 7;
+				expect(util._convert24to12(expectedHour + 12)).toBe('' + expectedHour);
 			});
 
 			it('should return 12 if the normalized value is 0', function () {
@@ -92,8 +94,8 @@ describe('datetimepicker', function () {
 			});
 
 			it('should normalize values that are clearly out of the expected range', function () {
-				var expectedValue = 11;
-				expect(util._convert24to12(expectedValue + 12 * 3)).toBe("" + expectedValue);
+				const expectedValue = 11;
+				expect(util._convert24to12(expectedValue + 12 * 3)).toBe('' + expectedValue);
 			});
 
 		});
@@ -152,13 +154,14 @@ describe('datetimepicker', function () {
 				expect(util._detectSupport('z').iso8601).toBe(false);
 				expect(util._detectSupport('acdf').iso8601).toBe(false);
 			});
+
 		});
 
 		describe('selectLocalTimezone', function () {
 
-			var timepicker,
-				timezoneOffset,
-				defaultTimezoneOffset;
+			let timepicker;
+			let timezoneOffset;
+			let defaultTimezoneOffset;
 
 			beforeEach(function () {
 
@@ -166,7 +169,7 @@ describe('datetimepicker', function () {
 					timezone_select: affix('select')
 				};
 
-				var now = new Date();
+				const now = new Date();
 
 				timezoneOffset = String(-now.getTimezoneOffset());
 				defaultTimezoneOffset = String(timezoneOffset - 60);
@@ -201,23 +204,20 @@ describe('datetimepicker', function () {
 		describe('computeEffectiveSetting', function () {
 
 			it('pulls the setting from the passed settings object if it is there', function () {
-				var expectedUniqueValue = 'This is very unique',
-					settings = {
-						property: expectedUniqueValue
-					};
-
+				const expectedUniqueValue = 'This is very unique';
+				const settings = { property: expectedUniqueValue };
 				expect(util._computeEffectiveSetting(settings, 'property')).toBe(expectedUniqueValue);
 			});
 
 			it('pulls the setting from the timepicker defaults if there are no passed settings', function () {
-				var expectedValue = $.timepicker._defaults.separator;
+				const expectedValue = $.timepicker._defaults.separator;
 				expect(expectedValue).toBeDefined();
 				expect(util._computeEffectiveSetting(undefined, 'separator')).toBe(expectedValue);
 			});
 
 			it('pulls the setting from the timepicker defaults if not present in the passed settings', function () {
-				var expectedValue = $.timepicker._defaults.separator,
-					settings = {};
+				const expectedValue = $.timepicker._defaults.separator;
+				const settings = {};
 				expect(expectedValue).toBeDefined();
 				expect(util._computeEffectiveSetting(settings, 'separator')).toBe(expectedValue);
 			});
@@ -226,49 +226,35 @@ describe('datetimepicker', function () {
 
 		describe('splitDateTime', function () {
 
-			var expectedDateString = '3/6/1967',
-				expectedTimeString = '07:32';
+			const expectedDateString = '3/6/1967';
+			const expectedTimeString = '07:32';
 
 			it('splits a date and time into its parts using the default separator', function () {
-
-				var inputDateTimeString = expectedDateString + $.timepicker._defaults.separator + expectedTimeString,
-					result;
-
-				result = $.timepicker._util._splitDateTime(inputDateTimeString, {});
-
+				const inputDateTimeString = expectedDateString + $.timepicker._defaults.separator + expectedTimeString;
+				const result = $.timepicker._util._splitDateTime(inputDateTimeString, {});
 				expect(result).toEqual({ dateString: expectedDateString, timeString: expectedTimeString });
 			});
 
 
 			it('splits a date and time into its parts using a supplied separator', function () {
-
-				var separator = '-',
-					inputDateTimeString = expectedDateString + separator + expectedTimeString,
-					result;
-
-				result = $.timepicker._util._splitDateTime(inputDateTimeString, { separator: separator });
-
+				const separator = '-';
+				const inputDateTimeString = expectedDateString + separator + expectedTimeString;
+				const result = $.timepicker._util._splitDateTime(inputDateTimeString, { separator: separator });
 				expect(result).toEqual({ dateString: expectedDateString, timeString: expectedTimeString });
-
 			});
 
 			it('splits a date and time into its parts when there are multiple separators in the time format', function () {
-
-				var timeFormat = 'hh mm tt',
-					separator = ' ',
-					alternateTimeString = '07 32 am',
-					inputDateTimeString = expectedDateString + separator + alternateTimeString,
-					timeSettings = { separator: separator, timeFormat: timeFormat },
-					result;
-
-				result = $.timepicker._util._splitDateTime(inputDateTimeString, timeSettings);
-
+				const timeFormat = 'hh mm tt';
+				const separator = ' ';
+				const alternateTimeString = '07 32 am';
+				const inputDateTimeString = expectedDateString + separator + alternateTimeString;
+				const timeSettings = { separator: separator, timeFormat: timeFormat };
+				const result = $.timepicker._util._splitDateTime(inputDateTimeString, timeSettings);
 				expect(result).toEqual({ dateString: expectedDateString, timeString: alternateTimeString });
-
 			});
 
 			it('splits only a date into itself', function () {
-				var result = $.timepicker._util._splitDateTime(expectedDateString, {});
+				const result = $.timepicker._util._splitDateTime(expectedDateString, {});
 				expect(result).toEqual({ dateString: expectedDateString, timeString: '' });
 			});
 
@@ -276,15 +262,13 @@ describe('datetimepicker', function () {
 
 		describe('parseDateTimeInternal', function () {
 
-			var dateFormat = 'mm/dd/yy';
+			const dateFormat = 'mm/dd/yy';
 
 			it('should return only a date if there is no time component', function () {
 
-				var inputDateString = '9/11/2001',
-					expectedDate = new Date(inputDateString),
-					result;
-
-				result = util._parseDateTimeInternal(dateFormat, undefined, inputDateString, undefined, undefined);
+				const inputDateString = '9/11/2001';
+				const expectedDate = new Date(inputDateString);
+				const result = util._parseDateTimeInternal(dateFormat, undefined, inputDateString, undefined, undefined);
 
 				expect(result.date).toEqual(expectedDate);
 				expect(result.timeObj).toBeUndefined();
@@ -293,23 +277,26 @@ describe('datetimepicker', function () {
 
 			it('should return a date and a parsed time if a time is included', function () {
 
-				var expectedDateString = '7/4/1976',
-					expectedParsedTime = {
-						hour: 1,
-						minute: 23,
-						second: 45,
-						millisec: 678,
-						microsec: 0
-					},
-					inputDateTimeString = expectedDateString + ' ' +
-						expectedParsedTime.hour + ':' +
-						expectedParsedTime.minute + ':' +
-						expectedParsedTime.second + '.' +
-						expectedParsedTime.millisec,
-					expectedDate = new Date(expectedDateString),
-					result;
+				const expectedDateString = '7/4/1976';
 
-				result = util._parseDateTimeInternal(dateFormat, 'H:m:s.l', inputDateTimeString, undefined, undefined);
+				const expectedParsedTime = {
+					hour: 1,
+					minute: 23,
+					second: 45,
+					millisec: 678,
+					microsec: 0
+				};
+
+				const inputDateTimeString =
+					expectedDateString + ' ' +
+					expectedParsedTime.hour + ':' +
+					expectedParsedTime.minute + ':' +
+					expectedParsedTime.second + '.' +
+					expectedParsedTime.millisec;
+
+				const expectedDate = new Date(expectedDateString);
+
+				const result = util._parseDateTimeInternal(dateFormat, 'H:m:s.l', inputDateTimeString, undefined, undefined);
 
 				expect(result.date).toEqual(expectedDate);
 				expect(result.timeObj).toEqual(expectedParsedTime);
@@ -317,7 +304,7 @@ describe('datetimepicker', function () {
 			});
 
 			it('should throw an exception if it cannot parse the time', function () {
-				var inputDateString = '4/17/2008 11:22:33';
+				const inputDateString = '4/17/2008 11:22:33';
 				expect(function () {
 					util._parseDateTimeInternal(dateFormat, 'q', inputDateString, undefined, undefined);
 				}).toThrow('Wrong time format');
@@ -359,14 +346,14 @@ describe('datetimepicker', function () {
 			});
 
 			it('returns the input if the input is greater than 840 (+14:00)', function () {
-				var expectedMinutes = 850;
-				var actualMinutes = $.timepicker.timezoneOffsetString(expectedMinutes, false);
+				const expectedMinutes = 850;
+				const actualMinutes = $.timepicker.timezoneOffsetString(expectedMinutes, false);
 				expect(actualMinutes).toBe(expectedMinutes);
 			});
 
 			it('returns the input if the input is less than -720 (-12:00)', function () {
-				var expectedMinutes = -730;
-				var actualMinutes = $.timepicker.timezoneOffsetString(expectedMinutes, false);
+				const expectedMinutes = -730;
+				const actualMinutes = $.timepicker.timezoneOffsetString(expectedMinutes, false);
 				expect(actualMinutes).toBe(expectedMinutes);
 			});
 
@@ -405,25 +392,16 @@ describe('datetimepicker', function () {
 		describe('timezoneAdjust', function () {
 
 			it('does not change the date if the timezone yields NaN for an offset', function () {
-				var expectedDate = new Date();
+				const expectedDate = new Date();
 				expect($.timepicker.timezoneAdjust(expectedDate, NaN)).toEqual(expectedDate);
 			});
 
 			it('changes the minutes by the time zone offset minutes', function () {
-
-				var inputDate,
-					originalMillis,
-					expectedDifference,
-					adjustedDate;
-
-				inputDate = new Date();
-				originalMillis = inputDate.getTime();
-				expectedDifference = -(inputDate.getTimezoneOffset() + 60) * 60 * 1000;
-
-				adjustedDate = $.timepicker.timezoneAdjust(inputDate, '+0100');
-
+				const inputDate = new Date();
+				const originalMillis = inputDate.getTime();
+				const expectedDifference = -(inputDate.getTimezoneOffset() + 60) * 60 * 1000;
+				const adjustedDate = $.timepicker.timezoneAdjust(inputDate, '+0100');
 				expect(adjustedDate.getTime() - originalMillis).toBe(expectedDifference);
-
 			});
 
 		});
@@ -432,8 +410,8 @@ describe('datetimepicker', function () {
 
 			it('calls console.log with the message if the console exists', function () {
 
-				var expectedMessage = "Just what I expected!";
-				spyOn(window.console, "log");
+				const expectedMessage = 'Just what I expected!';
+				spyOn(window.console, 'log');
 
 				$.timepicker.log(expectedMessage);
 
@@ -443,8 +421,8 @@ describe('datetimepicker', function () {
 
 			it('does not call console.log if there is no console', function () {
 
-				var originalConsole = window.console,
-					consoleLogSpy = spyOn(window.console, "log");
+				const originalConsole = window.console;
+				const consoleLogSpy = spyOn(window.console, 'log');
 				window.console = undefined;
 
 				$.timepicker.log("Don't care");
@@ -459,9 +437,9 @@ describe('datetimepicker', function () {
 
 		describe('range functions', function () {
 
-			var startTime = $('<p>start</p>'),
-				endTime = $('<p>end</p>'),
-				options = {};
+			const startTime = $('<p>start</p>');
+			const endTime = $('<p>end</p>');
+			const options = {};
 
 			describe('convenience functions', function () {
 
@@ -500,12 +478,12 @@ describe('datetimepicker', function () {
 		describe('formatTime', function () {
 			describe('single formats, default options', function () {
 
-				var emptyTime = {};
+				const emptyTime = {};
 
 				describe('hours', function () {
 
-					var earlyHour = { hour: 7 },
-						lateHour = { hour: 17 };
+					const earlyHour = { hour: 7 };
+					const lateHour = { hour: 17 };
 
 					it('formats HH correctly', function () {
 						expect($.datepicker.formatTime('HH', emptyTime)).toBe('00');
@@ -535,8 +513,8 @@ describe('datetimepicker', function () {
 
 				describe('minutes', function () {
 
-					var singleDigitMinute = { minute: 3 },
-						doubleDigitMinute = { minute: 42 };
+					const singleDigitMinute = { minute: 3 };
+					const doubleDigitMinute = { minute: 42 };
 
 					it('formats mm correctly', function () {
 						expect($.datepicker.formatTime('mm', emptyTime)).toBe('00');
@@ -554,8 +532,8 @@ describe('datetimepicker', function () {
 
 				describe('seconds', function () {
 
-					var singleDigitSecond = { second: 5 },
-						doubleDigitSecond = { second: 31 };
+					const singleDigitSecond = { second: 5 };
+					const doubleDigitSecond = { second: 31 };
 
 					it('formats ss correctly', function () {
 						expect($.datepicker.formatTime('ss', emptyTime)).toBe('00');
@@ -574,9 +552,9 @@ describe('datetimepicker', function () {
 				describe('milliseconds', function () {
 					it('formats l correctly', function () {
 
-						var singleDigitMillis = { millisec: 3 },
-							doubleDigitMillis = { millisec: 17 },
-							tripleDigitMillis = { millisec: 123 };
+						const singleDigitMillis = { millisec: 3 };
+						const doubleDigitMillis = { millisec: 17 };
+						const tripleDigitMillis = { millisec: 123 };
 
 						expect($.datepicker.formatTime('l', emptyTime)).toBe('000');
 						expect($.datepicker.formatTime('l', singleDigitMillis)).toBe('003');
@@ -589,9 +567,9 @@ describe('datetimepicker', function () {
 				describe('microseconds', function () {
 					it('formats c correctly', function () {
 
-						var singleDigitMicros = { microsec: 3 },
-							doubleDigitMicros = { microsec: 17 },
-							tripleDigitMicros = { microsec: 123 };
+						const singleDigitMicros = { microsec: 3 };
+						const doubleDigitMicros = { microsec: 17 };
+						const tripleDigitMicros = { microsec: 123 };
 
 						expect($.datepicker.formatTime('c', emptyTime)).toBe('000');
 						expect($.datepicker.formatTime('c', singleDigitMicros)).toBe('003');
@@ -603,11 +581,11 @@ describe('datetimepicker', function () {
 
 				describe('timezone', function () {
 
-					var nullTimezoneTime = { timezone: null },
-						noTimezoneTime = emptyTime,
-						timezoneTime = { timezone: -240 },
-						noTimezoneOptions = {},
-						timezoneOptions = { timezone: 600 };
+					const nullTimezoneTime = { timezone: null };
+					const noTimezoneTime = emptyTime;
+					const timezoneTime = { timezone: -240 };
+					const noTimezoneOptions = {};
+					const timezoneOptions = { timezone: 600 };
 
 					it('handles z correctly', function () {
 						expect($.datepicker.formatTime('z', timezoneTime, noTimezoneOptions)).toBe('-0400');
@@ -631,8 +609,8 @@ describe('datetimepicker', function () {
 
 				describe('am/pm', function () {
 
-					var morningHour = { hour: 3 },
-						afternoonHour = { hour: 15 };
+					const morningHour = { hour: 3 };
+					const afternoonHour = { hour: 15 };
 
 					it('formats t correctly', function () {
 						expect($.datepicker.formatTime('t', emptyTime)).toBe('a');
@@ -696,7 +674,7 @@ describe('datetimepicker', function () {
 	describe('methods', function () {
 		describe('setDate', function () {
 			it('should accept null as date', function () {
-				var $input = affix('input').datetimepicker();
+				const $input = affix('input').datetimepicker();
 				$input.datetimepicker('setDate', '2013-11-25 15:30:25');
 				$input.datetimepicker('setDate', null);
 				expect($input.datetimepicker('getDate')).toBeNull();
@@ -706,14 +684,13 @@ describe('datetimepicker', function () {
 
 	describe('altField', function () {
 
-		var $input;
-		var $altField;
-		var inputFocusSpy;
+		let $input;
+		let $altField;
+		let inputFocusSpy;
 
 		beforeEach(function () {
 			$input = affix('input');
 			$altField = affix('input');
-
 			inputFocusSpy = jasmine.createSpy();
 			$input.focus(inputFocusSpy);
 		});
@@ -723,7 +700,6 @@ describe('datetimepicker', function () {
 				showOn: 'button',
 				altField: $altField
 			});
-
 			$altField.trigger('focus');
 			expect(inputFocusSpy).toHaveBeenCalled();
 		});
@@ -734,7 +710,6 @@ describe('datetimepicker', function () {
 				altField: $altField,
 				altRedirectFocus: false
 			});
-
 			$altField.trigger('focus');
 			expect(inputFocusSpy).not.toHaveBeenCalled();
 		});
@@ -743,7 +718,7 @@ describe('datetimepicker', function () {
 
 	describe('timeInput', function () {
 
-		var $input;
+		let $input;
 
 		beforeEach(function () {
 			$input = affix('input');
@@ -754,14 +729,14 @@ describe('datetimepicker', function () {
 			it('just display, input disabled', function () {
 				$input.datetimepicker();
 				$input.trigger('focus');
-				var $timeInput = $('.ui_tpicker_time_input');
+				const $timeInput = $('.ui_tpicker_time_input');
 				expect($timeInput.attr('disabled')).toBe('disabled');
 			});
 
 			it('allow type new time', function () {
 				$input.datetimepicker({ timeInput: true });
 				$input.trigger('focus');
-				var $timeInput = $('.ui_tpicker_time_input');
+				const $timeInput = $('.ui_tpicker_time_input');
 				expect($timeInput.attr('disabled')).toBeUndefined();
 			});
 
@@ -775,30 +750,34 @@ describe('datetimepicker', function () {
 			});
 
 			it('should update timepicker time', function () {
-				var inputTime = '12:34';
-				var inst = $.datepicker._getInst($input.get(0));
-				var tp_inst = $.datepicker._get(inst, 'timepicker');
-				var $timeInput = inst.dpDiv.find('.ui_tpicker_time_input');
+
+				const inputTime = '12:34';
+				const inst = $.datepicker._getInst($input.get(0));
+				const tp_inst = $.datepicker._get(inst, 'timepicker');
+				const $timeInput = inst.dpDiv.find('.ui_tpicker_time_input');
 
 				$timeInput.val(inputTime).trigger('change');
 				expect(tp_inst.formattedTime).toEqual(inputTime);
+
 			});
 
 			it('revert to previous time value if input is invalid', function () {
-				var invalidTime = '123:456';
-				var inst = $.datepicker._getInst($input.get(0));
-				var tp_inst = $.datepicker._get(inst, 'timepicker');
-				var $timeInput = inst.dpDiv.find('.ui_tpicker_time_input');
 
-				var previousTimeString = tp_inst.formattedTime;
+				const invalidTime = '123:456';
+				const inst = $.datepicker._getInst($input.get(0));
+				const tp_inst = $.datepicker._get(inst, 'timepicker');
+				const $timeInput = inst.dpDiv.find('.ui_tpicker_time_input');
+
+				const previousTimeString = tp_inst.formattedTime;
 				$timeInput.val(invalidTime).trigger('change');
 				expect(tp_inst.formattedTime).toEqual(previousTimeString);
+
 			});
 
 		});
 
 		afterEach(function () {
-			var $widget = $input.datepicker('widget');
+			const $widget = $input.datepicker('widget');
 			$input.datepicker('destroy');
 			$widget.remove();
 		});

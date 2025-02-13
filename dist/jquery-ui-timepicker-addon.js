@@ -1,6 +1,6 @@
 /*! jQuery Timepicker Addon - v1.6.3 - 2016-04-20
 * http://trentrichardson.com/examples/timepicker
-* Copyright (c) 2016 Trent Richardson; Licensed MIT */
+* Copyright (c) 2020 Trent Richardson; Licensed MIT */
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery', 'jquery-ui'], factory);
@@ -988,10 +988,50 @@
 		},
 
 		_onFocus: function () {
+			var inst = $.datepicker._getInst(this.$input.get(0)),
+			tp_inst = $.datepicker._get(inst, 'timepicker');
+			if (!this.$input.val()) {
+				// If value is empty, reset values to default.
+				if (tp_inst) {
+					tp_inst.hour =
+						tp_inst._defaults.hour < tp_inst._defaults.hourMin
+						? tp_inst._defaults.hourMin
+						: tp_inst._defaults.hour > tp_inst._defaults.hourMax
+							? tp_inst._defaults.hourMax
+							: tp_inst._defaults.hour
+							;
+					tp_inst.minute =
+						tp_inst._defaults.minute < tp_inst._defaults.minuteMin
+						? tp_inst._defaults.minuteMin
+						: tp_inst._defaults.minute > tp_inst._defaults.minuteMax
+							? tp_inst._defaults.minuteMax
+							: tp_inst._defaults.minute
+							;
+					tp_inst.second =
+						tp_inst._defaults.second < tp_inst._defaults.secondMin
+						? tp_inst._defaults.secondMin
+						: tp_inst._defaults.second > tp_inst._defaults.secondMax
+							? tp_inst._defaults.secondMax
+							: tp_inst._defaults.second
+							;
+					tp_inst.millisec =
+						tp_inst._defaults.millisec < tp_inst._defaults.millisecMin
+						? tp_inst._defaults.millisecMin
+						: tp_inst._defaults.millisec > tp_inst._defaults.millisecMax
+							? tp_inst._defaults.millisecMax
+							: tp_inst._defaults.millisec
+							;
+					tp_inst.microsec =
+						tp_inst._defaults.microsec < tp_inst._defaults.microsecMin
+						? tp_inst._defaults.microsecMin
+						: tp_inst._defaults.microsec > tp_inst._defaults.microsecMax
+							? tp_inst._defaults.microsecMax
+							: tp_inst._defaults.microsec
+							;
+				}
+			}
 			if (!this.$input.val() && this._defaults.defaultValue) {
 				this.$input.val(this._defaults.defaultValue);
-				var inst = $.datepicker._getInst(this.$input.get(0)),
-					tp_inst = $.datepicker._get(inst, 'timepicker');
 				if (tp_inst) {
 					if (tp_inst._defaults.timeOnly && (inst.input.val() !== inst.lastVal)) {
 						try {

@@ -107,8 +107,8 @@ module.exports = function (grunt) {
 			options: {
 				specs: 'test/*_spec.js',
 				vendor: [
-					'http://code.jquery.com/jquery-1.11.1.min.js',
-					'http://code.jquery.com/ui/1.11.1/jquery-ui.min.js',
+					'http://code.jquery.com/jquery-3.6.2.min.js',
+					'http://code.jquery.com/ui/1.13.2/jquery-ui.min.js',
 					'http://github.com/searls/jasmine-fixture/releases/1.0.5/1737/jasmine-fixture.js'
 				],
 				version: '3.8.0'
